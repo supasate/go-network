@@ -4,6 +4,7 @@ import (
     "os"
     "fmt"
     "net"
+    "time"
 )
 
 func main() {
@@ -30,6 +31,8 @@ func handleClient(conn net.Conn) {
 
     var buf [512]byte
     for {
+        conn.SetDeadline(time.Now().Add(10 * time.Second))
+
         // read upto 512 bytes
         n, err := conn.Read(buf[0:])
         if err != nil {
